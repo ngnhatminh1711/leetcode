@@ -354,10 +354,10 @@
         </div>
 
         <div class="tab-panel hidden" data-panel="code">
-          <h2 class="section-heading">Template code</h2>
+          <h2 class="section-heading">Template code <span class="badge badge-count">Java</span></h2>
           ${renderCodeBlock(p.codeTemplate, "js-template-" + p.id)}
 
-          <h2 class="section-heading">Code lời giải bài đại diện: ${escapeHtml(p.walkthrough.problemName)}</h2>
+          <h2 class="section-heading">Code lời giải bài đại diện: ${escapeHtml(p.walkthrough.problemName)} <span class="badge badge-count">Java</span></h2>
           ${renderCodeBlock(p.walkthrough.code, "js-solution-" + p.id)}
 
           ${renderDemoSection(p)}
@@ -476,7 +476,7 @@
         <p class="muted" style="margin-bottom:8px;">${escapeHtml(p.demo.description)}</p>
         <input type="text" class="search-input search-input-block" id="demoInput-${p.id}" value="${escapeHtml(p.demo.defaultInput)}" style="margin:0 0 8px 0;">
         <button class="demo-run-btn" id="demoRunBtn-${p.id}">Chạy demo</button>
-        <p class="demo-warning">Demo chạy trực tiếp bằng JavaScript có sẵn trong trang (không dùng eval/Function), chỉ minh họa với input bạn nhập, chạy hoàn toàn local trên trình duyệt của bạn.</p>
+        <p class="demo-warning">Code phía trên là Java để bạn học và copy. Nút "Chạy demo" bên dưới minh họa cùng logic thuật toán nhưng chạy ngầm bằng JavaScript ngay trên trình duyệt (trình duyệt không chạy được Java thật) — không dùng eval/Function, chỉ chạy local với input bạn nhập.</p>
         <pre class="demo-output" id="demoOutput-${p.id}"></pre>
       </div>
     `;

@@ -25,20 +25,22 @@ const PATTERNS = [
     "Khởi tạo giá trị min/max sai (ví dụ khởi tạo max = 0 trong khi mảng có thể toàn số âm)."
   ],
   thinkingTemplate: "Hỏi: Tại vị trí i, mình cần biết gì từ các phần tử trước đó để ra quyết định? Nếu câu trả lời chỉ là '1-2 con số đã cập nhật dần' (ví dụ: tổng nhỏ nhất đã thấy, giá lớn nhất đã thấy) thì đây là dấu hiệu chỉ cần một vòng lặp duy nhất.",
-  codeTemplate: `function arrayScanTemplate(nums) {
-  // Bước 1: khởi tạo biến theo dõi (ví dụ: best, current)
-  let best = nums[0];
-  let current = nums[0];
+  codeTemplate: `public class ArrayScanTemplate {
+    public static int arrayScan(int[] nums) {
+        // Bước 1: khởi tạo biến theo dõi (ví dụ: best, current)
+        int best = nums[0];
+        int current = nums[0];
 
-  // Bước 2: duyệt một lần qua mảng
-  for (let i = 1; i < nums.length; i++) {
-    // Bước 3: cập nhật "current" dựa trên phần tử hiện tại
-    current = Math.max(nums[i], current + nums[i]);
-    // Bước 4: cập nhật "best" nếu current tốt hơn
-    best = Math.max(best, current);
-  }
+        // Bước 2: duyệt một lần qua mảng
+        for (int i = 1; i < nums.length; i++) {
+            // Bước 3: cập nhật "current" dựa trên phần tử hiện tại
+            current = Math.max(nums[i], current + nums[i]);
+            // Bước 4: cập nhật "best" nếu current tốt hơn
+            best = Math.max(best, current);
+        }
 
-  return best;
+        return best;
+    }
 }`,
   examples: [
     { name: "Two Sum", difficulty: "Easy", note: "Tìm 2 số có tổng bằng target — thường giải bằng Hash Map, nhưng bản chất vẫn là duyệt mảng một lần." },
@@ -59,21 +61,25 @@ const PATTERNS = [
       "Sau khi cập nhật current, so sánh với best — nếu current lớn hơn thì cập nhật best.",
       "Lặp lại đến hết mảng, trả về best."
     ],
-    code: `function maxSubArray(nums) {
-  let current = nums[0];
-  let best = nums[0];
+    code: `public class Solution {
+    public static int maxSubArray(int[] nums) {
+        int current = nums[0];
+        int best = nums[0];
 
-  for (let i = 1; i < nums.length; i++) {
-    // Nếu current đang âm, nó kéo tổng xuống -> bắt đầu lại từ nums[i]
-    current = Math.max(nums[i], current + nums[i]);
-    best = Math.max(best, current);
-  }
+        for (int i = 1; i < nums.length; i++) {
+            // Nếu current đang âm, nó kéo tổng xuống -> bắt đầu lại từ nums[i]
+            current = Math.max(nums[i], current + nums[i]);
+            best = Math.max(best, current);
+        }
 
-  return best;
-}
+        return best;
+    }
 
-// Demo:
-console.log(maxSubArray([-2,1,-3,4,-1,2,1,-5,4])); // 6`,
+    public static void main(String[] args) {
+        int[] nums = {-2, 1, -3, 4, -1, 2, 1, -5, 4};
+        System.out.println(maxSubArray(nums)); // 6
+    }
+}`,
     timeComplexity: "O(n) — chỉ duyệt mảng một lần.",
     spaceComplexity: "O(1) — chỉ dùng 2 biến, không cần thêm cấu trúc dữ liệu.",
     similar: ["Best Time to Buy and Sell Stock", "House Robber", "Maximum Product Subarray"]
@@ -138,22 +144,27 @@ console.log(maxSubArray([-2,1,-3,4,-1,2,1,-5,4])); // 6`,
     "Quên rằng object key trong JS luôn là string, có thể gây lỗi khi key là số hoặc object phức tạp."
   ],
   thinkingTemplate: "Đọc câu 'tìm 2 số có tổng bằng target', ta tự hỏi: với mỗi số hiện tại, số còn thiếu để đạt target là gì (target - nums[i])? Nếu tra cứu được ngay bằng map thì mỗi lần kiểm tra gần như O(1), thay vì phải duyệt lại từ đầu.",
-  codeTemplate: `function frequencyCounterTemplate(items) {
-  const map = new Map();
+  codeTemplate: `import java.util.HashMap;
+import java.util.Map;
 
-  // Bước 1: xây map (đếm tần suất hoặc lưu index)
-  for (const item of items) {
-    map.set(item, (map.get(item) || 0) + 1);
-  }
+public class FrequencyCounterTemplate {
+    public static Map<Integer, Integer> countFrequency(int[] items) {
+        Map<Integer, Integer> map = new HashMap<>();
 
-  // Bước 2: dùng map để tra cứu nhanh
-  for (const item of items) {
-    if (map.get(item) > 1) {
-      // xử lý khi gặp phần tử trùng
+        // Bước 1: xây map (đếm tần suất hoặc lưu index)
+        for (int item : items) {
+            map.put(item, map.getOrDefault(item, 0) + 1);
+        }
+
+        // Bước 2: dùng map để tra cứu nhanh
+        for (int item : items) {
+            if (map.get(item) > 1) {
+                // xử lý khi gặp phần tử trùng
+            }
+        }
+
+        return map;
     }
-  }
-
-  return map;
 }`,
   examples: [
     { name: "Two Sum", difficulty: "Easy", note: "Bài đại diện bên dưới — vừa duyệt vừa tra map." },
@@ -174,24 +185,32 @@ console.log(maxSubArray([-2,1,-3,4,-1,2,1,-5,4])); // 6`,
       "Kiểm tra map.has(complement) — nếu có, nghĩa là ta đã tìm được cặp, trả về [map.get(complement), i].",
       "Nếu không có, lưu nums[i] vào map: map.set(nums[i], i), rồi tiếp tục vòng lặp."
     ],
-    code: `function twoSum(nums, target) {
-  const seen = new Map(); // {giá trị: index}
+    code: `import java.util.HashMap;
+import java.util.Map;
 
-  for (let i = 0; i < nums.length; i++) {
-    const complement = target - nums[i];
+public class Solution {
+    public static int[] twoSum(int[] nums, int target) {
+        Map<Integer, Integer> seen = new HashMap<>(); // {giá trị: index}
 
-    if (seen.has(complement)) {
-      return [seen.get(complement), i];
+        for (int i = 0; i < nums.length; i++) {
+            int complement = target - nums[i];
+
+            if (seen.containsKey(complement)) {
+                return new int[]{seen.get(complement), i};
+            }
+
+            seen.put(nums[i], i);
+        }
+
+        return new int[]{}; // không tìm thấy
     }
 
-    seen.set(nums[i], i);
-  }
-
-  return []; // không tìm thấy
-}
-
-// Demo:
-console.log(twoSum([2,7,11,15], 9)); // [0, 1]`,
+    public static void main(String[] args) {
+        int[] nums = {2, 7, 11, 15};
+        int[] result = twoSum(nums, 9);
+        System.out.println(result[0] + ", " + result[1]); // 0, 1
+    }
+}`,
     timeComplexity: "O(n) — chỉ duyệt mảng một lần, mỗi lần tra map là O(1) trung bình.",
     spaceComplexity: "O(n) — trong trường hợp xấu nhất phải lưu gần hết mảng vào map.",
     similar: ["3Sum", "Two Sum II", "4Sum"]
@@ -266,23 +285,25 @@ console.log(twoSum([2,7,11,15], 9)); // [0, 1]`,
     "Không xử lý phần tử trùng lặp khi bài yêu cầu kết quả không được trùng (ví dụ 3Sum)."
   ],
   thinkingTemplate: "Hỏi: nếu tổng 2 phần tử ở 2 đầu quá lớn, mình nên di chuyển con trỏ nào để giảm tổng? Nếu quá nhỏ, nên di chuyển con trỏ nào để tăng tổng? Nếu câu trả lời rõ ràng và luôn đúng hướng, Two Pointers sẽ hoạt động.",
-  codeTemplate: `function twoPointersTemplate(nums, target) {
-  let left = 0;
-  let right = nums.length - 1;
+  codeTemplate: `public class TwoPointersTemplate {
+    public static int[] twoPointers(int[] nums, int target) {
+        int left = 0;
+        int right = nums.length - 1;
 
-  while (left < right) {
-    const sum = nums[left] + nums[right];
+        while (left < right) {
+            int sum = nums[left] + nums[right];
 
-    if (sum === target) {
-      return [left, right];
-    } else if (sum < target) {
-      left++;  // cần tổng lớn hơn -> tăng phần tử nhỏ
-    } else {
-      right--; // cần tổng nhỏ hơn -> giảm phần tử lớn
+            if (sum == target) {
+                return new int[]{left, right};
+            } else if (sum < target) {
+                left++;  // cần tổng lớn hơn -> tăng phần tử nhỏ
+            } else {
+                right--; // cần tổng nhỏ hơn -> giảm phần tử lớn
+            }
+        }
+
+        return new int[]{};
     }
-  }
-
-  return [];
 }`,
   examples: [
     { name: "Valid Palindrome", difficulty: "Easy", note: "2 con trỏ từ 2 đầu chuỗi tiến vào giữa, so sánh ký tự." },
@@ -305,27 +326,32 @@ console.log(twoSum([2,7,11,15], 9)); // [0, 1]`,
       "Nếu sum > target: giảm right (cần số nhỏ hơn để tổng giảm xuống).",
       "Lặp lại đến khi left < right không còn đúng."
     ],
-    code: `function twoSumSorted(numbers, target) {
-  let left = 0;
-  let right = numbers.length - 1;
+    code: `public class Solution {
+    public static int[] twoSum(int[] numbers, int target) {
+        int left = 0;
+        int right = numbers.length - 1;
 
-  while (left < right) {
-    const sum = numbers[left] + numbers[right];
+        while (left < right) {
+            int sum = numbers[left] + numbers[right];
 
-    if (sum === target) {
-      return [left + 1, right + 1]; // đề yêu cầu 1-based index
-    } else if (sum < target) {
-      left++;
-    } else {
-      right--;
+            if (sum == target) {
+                return new int[]{left + 1, right + 1}; // đề yêu cầu 1-based index
+            } else if (sum < target) {
+                left++;
+            } else {
+                right--;
+            }
+        }
+
+        return new int[]{};
     }
-  }
 
-  return [];
-}
-
-// Demo:
-console.log(twoSumSorted([2,7,11,15], 9)); // [1, 2]`,
+    public static void main(String[] args) {
+        int[] numbers = {2, 7, 11, 15};
+        int[] result = twoSum(numbers, 9);
+        System.out.println(result[0] + ", " + result[1]); // 1, 2
+    }
+}`,
     timeComplexity: "O(n) — mỗi con trỏ chỉ di chuyển tối đa n bước, tổng cộng vẫn là 1 lượt duyệt.",
     spaceComplexity: "O(1) — không cần thêm cấu trúc dữ liệu nào, chỉ 2 biến con trỏ.",
     similar: ["3Sum", "4Sum", "Container With Most Water"]
@@ -397,28 +423,33 @@ console.log(twoSumSorted([2,7,11,15], 9)); // [1, 2]`,
     "Nhầm giữa 'cửa sổ kích thước cố định' và 'cửa sổ kích thước thay đổi' — áp dụng sai template."
   ],
   thinkingTemplate: "Hỏi: khi mở rộng cửa sổ (right++), điều kiện có thể bị vi phạm không? Nếu có, mình cần thu hẹp từ bên trái (left++) đến khi nào? Nếu trả lời được rõ ràng, đó là dấu hiệu Sliding Window phù hợp.",
-  codeTemplate: `function slidingWindowTemplate(s) {
-  let left = 0;
-  let windowState = new Map(); // hoặc biến đếm, tổng, v.v.
-  let best = 0;
+  codeTemplate: `import java.util.HashMap;
+import java.util.Map;
 
-  for (let right = 0; right < s.length; right++) {
-    // Bước 1: thêm s[right] vào cửa sổ
-    const c = s[right];
-    windowState.set(c, (windowState.get(c) || 0) + 1);
+public class SlidingWindowTemplate {
+    public static int slidingWindow(String s) {
+        int left = 0;
+        Map<Character, Integer> windowState = new HashMap<>(); // hoặc biến đếm, tổng, v.v.
+        int best = 0;
 
-    // Bước 2: khi điều kiện bị vi phạm, thu hẹp từ bên trái
-    while (/* điều kiện vi phạm */ false) {
-      const leftChar = s[left];
-      windowState.set(leftChar, windowState.get(leftChar) - 1);
-      left++;
+        for (int right = 0; right < s.length(); right++) {
+            // Bước 1: thêm s[right] vào cửa sổ
+            char c = s.charAt(right);
+            windowState.put(c, windowState.getOrDefault(c, 0) + 1);
+
+            // Bước 2: khi điều kiện bị vi phạm, thu hẹp từ bên trái
+            while (/* điều kiện vi phạm */ false) {
+                char leftChar = s.charAt(left);
+                windowState.put(leftChar, windowState.get(leftChar) - 1);
+                left++;
+            }
+
+            // Bước 3: cập nhật kết quả tốt nhất
+            best = Math.max(best, right - left + 1);
+        }
+
+        return best;
     }
-
-    // Bước 3: cập nhật kết quả tốt nhất
-    best = Math.max(best, right - left + 1);
-  }
-
-  return best;
 }`,
   examples: [
     { name: "Maximum Average Subarray I", difficulty: "Easy", note: "Cửa sổ kích thước cố định k, trượt qua mảng." },
@@ -441,27 +472,33 @@ console.log(twoSumSorted([2,7,11,15], 9)); // [1, 2]`,
       "Cập nhật best = Math.max(best, right - left + 1).",
       "Trả về best sau khi duyệt hết chuỗi."
     ],
-    code: `function lengthOfLongestSubstring(s) {
-  const window = new Set();
-  let left = 0;
-  let best = 0;
+    code: `import java.util.HashSet;
+import java.util.Set;
 
-  for (let right = 0; right < s.length; right++) {
-    // Thu hẹp cửa sổ cho đến khi hết trùng ký tự
-    while (window.has(s[right])) {
-      window.delete(s[left]);
-      left++;
+public class Solution {
+    public static int lengthOfLongestSubstring(String s) {
+        Set<Character> window = new HashSet<>();
+        int left = 0;
+        int best = 0;
+
+        for (int right = 0; right < s.length(); right++) {
+            // Thu hẹp cửa sổ cho đến khi hết trùng ký tự
+            while (window.contains(s.charAt(right))) {
+                window.remove(s.charAt(left));
+                left++;
+            }
+
+            window.add(s.charAt(right));
+            best = Math.max(best, right - left + 1);
+        }
+
+        return best;
     }
 
-    window.add(s[right]);
-    best = Math.max(best, right - left + 1);
-  }
-
-  return best;
-}
-
-// Demo:
-console.log(lengthOfLongestSubstring("abcabcbb")); // 3`,
+    public static void main(String[] args) {
+        System.out.println(lengthOfLongestSubstring("abcabcbb")); // 3
+    }
+}`,
     timeComplexity: "O(n) — mỗi ký tự được thêm vào và xóa khỏi cửa sổ tối đa 1 lần.",
     spaceComplexity: "O(min(n, m)) — với m là kích thước bảng ký tự (ví dụ 26 chữ cái, hoặc 128 ASCII).",
     similar: ["Minimum Size Subarray Sum", "Permutation in String", "Longest Repeating Character Replacement"]
@@ -539,20 +576,25 @@ console.log(lengthOfLongestSubstring("abcabcbb")); // 3`,
     "Dùng sai loại cấu trúc — cần Queue (FIFO) nhưng lại dùng Stack (LIFO)."
   ],
   thinkingTemplate: "Hỏi: khi gặp phần tử đóng (ví dụ ')'); phần tử nào cần khớp với nó? Đó luôn là phần tử mở gần nhất chưa được khớp — chính là phần tử trên cùng của Stack. Nếu bài toán có tính chất 'gần nhất chưa xử lý xong', nghĩ ngay đến Stack.",
-  codeTemplate: `function stackTemplate(items) {
-  const stack = [];
+  codeTemplate: `import java.util.Deque;
+import java.util.ArrayDeque;
 
-  for (const item of items) {
-    if (/* điều kiện đẩy vào stack */ true) {
-      stack.push(item);
-    } else {
-      // Bước: lấy phần tử gần nhất ra để xử lý/so khớp
-      const top = stack.pop();
-      // so sánh/xử lý top với item
+public class StackTemplate {
+    public static boolean processWithStack(char[] items) {
+        Deque<Character> stack = new ArrayDeque<>();
+
+        for (char item : items) {
+            if (/* điều kiện đẩy vào stack */ true) {
+                stack.push(item);
+            } else {
+                // Bước: lấy phần tử gần nhất ra để xử lý/so khớp
+                char top = stack.pop();
+                // so sánh/xử lý top với item
+            }
+        }
+
+        return stack.isEmpty(); // ví dụ: kiểm tra mọi thứ đã khớp hết
     }
-  }
-
-  return stack.length === 0; // ví dụ: kiểm tra mọi thứ đã khớp hết
 }`,
   examples: [
     { name: "Valid Parentheses", difficulty: "Easy", note: "Bài đại diện bên dưới — khớp dấu ngoặc mở/đóng." },
@@ -575,27 +617,38 @@ console.log(lengthOfLongestSubstring("abcabcbb")); // 3`,
       "Nếu khớp, pop đỉnh stack ra.",
       "Sau khi duyệt hết chuỗi, trả về true nếu stack rỗng (mọi dấu đã khớp hết), false nếu còn dấu mở chưa đóng."
     ],
-    code: `function isValid(s) {
-  const stack = [];
-  const pairs = { ')': '(', ']': '[', '}': '{' };
+    code: `import java.util.Deque;
+import java.util.ArrayDeque;
+import java.util.Map;
+import java.util.HashMap;
 
-  for (const c of s) {
-    if (c === '(' || c === '[' || c === '{') {
-      stack.push(c);
-    } else {
-      // c là dấu đóng
-      if (stack.length === 0 || stack.pop() !== pairs[c]) {
-        return false;
-      }
+public class Solution {
+    public static boolean isValid(String s) {
+        Deque<Character> stack = new ArrayDeque<>();
+        Map<Character, Character> pairs = new HashMap<>();
+        pairs.put(')', '(');
+        pairs.put(']', '[');
+        pairs.put('}', '{');
+
+        for (char c : s.toCharArray()) {
+            if (c == '(' || c == '[' || c == '{') {
+                stack.push(c);
+            } else {
+                // c là dấu đóng
+                if (stack.isEmpty() || stack.pop() != pairs.get(c)) {
+                    return false;
+                }
+            }
+        }
+
+        return stack.isEmpty();
     }
-  }
 
-  return stack.length === 0;
-}
-
-// Demo:
-console.log(isValid("()[]{}")); // true
-console.log(isValid("(]"));     // false`,
+    public static void main(String[] args) {
+        System.out.println(isValid("()[]{}")); // true
+        System.out.println(isValid("(]"));     // false
+    }
+}`,
     timeComplexity: "O(n) — duyệt chuỗi một lần, mỗi thao tác push/pop là O(1).",
     spaceComplexity: "O(n) — trong trường hợp xấu nhất (toàn dấu mở), stack chứa hết n ký tự.",
     similar: ["Min Stack", "Remove All Adjacent Duplicates In String", "Generate Parentheses"]
@@ -671,23 +724,25 @@ console.log(isValid("(]"));     // false`,
     "Cập nhật left/right sai, quên +1/-1 gây lặp vô hạn (ví dụ right = mid thay vì right = mid - 1)."
   ],
   thinkingTemplate: "Hỏi: nếu kiểm tra phần tử giữa và nó không phải đáp án, mình có thể loại bỏ chắc chắn một nửa mảng không? Nếu câu trả lời là có (nhờ tính sắp xếp/đơn điệu), Binary Search sẽ hoạt động và cho O(log n).",
-  codeTemplate: `function binarySearchTemplate(nums, target) {
-  let left = 0;
-  let right = nums.length - 1;
+  codeTemplate: `public class BinarySearchTemplate {
+    public static int binarySearch(int[] nums, int target) {
+        int left = 0;
+        int right = nums.length - 1;
 
-  while (left <= right) {
-    const mid = left + Math.floor((right - left) / 2);
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
 
-    if (nums[mid] === target) {
-      return mid;
-    } else if (nums[mid] < target) {
-      left = mid + 1;  // target ở nửa phải
-    } else {
-      right = mid - 1; // target ở nửa trái
+            if (nums[mid] == target) {
+                return mid;
+            } else if (nums[mid] < target) {
+                left = mid + 1;  // target ở nửa phải
+            } else {
+                right = mid - 1; // target ở nửa trái
+            }
+        }
+
+        return -1; // không tìm thấy
     }
-  }
-
-  return -1; // không tìm thấy
 }`,
   examples: [
     { name: "Binary Search", difficulty: "Easy", note: "Bài đại diện bên dưới — tìm kiếm nhị phân cơ bản." },
@@ -710,27 +765,31 @@ console.log(isValid("(]"));     // false`,
       "Nếu nums[mid] > target: target (nếu có) nằm bên trái mid, đặt right = mid - 1.",
       "Nếu vòng lặp kết thúc mà chưa tìm thấy, trả về -1."
     ],
-    code: `function search(nums, target) {
-  let left = 0;
-  let right = nums.length - 1;
+    code: `public class Solution {
+    public static int search(int[] nums, int target) {
+        int left = 0;
+        int right = nums.length - 1;
 
-  while (left <= right) {
-    const mid = left + Math.floor((right - left) / 2);
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
 
-    if (nums[mid] === target) {
-      return mid;
-    } else if (nums[mid] < target) {
-      left = mid + 1;
-    } else {
-      right = mid - 1;
+            if (nums[mid] == target) {
+                return mid;
+            } else if (nums[mid] < target) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+
+        return -1;
     }
-  }
 
-  return -1;
-}
-
-// Demo:
-console.log(search([-1,0,3,5,9,12], 9)); // 4`,
+    public static void main(String[] args) {
+        int[] nums = {-1, 0, 3, 5, 9, 12};
+        System.out.println(search(nums, 9)); // 4
+    }
+}`,
     timeComplexity: "O(log n) — mỗi bước loại bỏ một nửa phạm vi tìm kiếm.",
     spaceComplexity: "O(1) — chỉ dùng vài biến con trỏ, không cần đệ quy hay cấu trúc phụ.",
     similar: ["Search Insert Position", "Find First and Last Position of Element in Sorted Array", "Search in Rotated Sorted Array"]
@@ -808,23 +867,27 @@ console.log(search([-1,0,3,5,9,12], 9)); // 4`,
   ],
   thinkingTemplate: "Hỏi: mình cần bao nhiêu con trỏ để theo dõi trạng thái (node hiện tại, node trước đó, node tiếp theo)? Với đảo ngược danh sách, cần 3 con trỏ: prev, curr, next. Với tìm chu trình, cần 2 con trỏ tốc độ khác nhau (fast, slow).",
   codeTemplate: `// Định nghĩa node (thường đã cho sẵn trong đề bài)
-function ListNode(val, next) {
-  this.val = val === undefined ? 0 : val;
-  this.next = next === undefined ? null : next;
+class ListNode {
+    int val;
+    ListNode next;
+    ListNode(int val) { this.val = val; }
+    ListNode(int val, ListNode next) { this.val = val; this.next = next; }
 }
 
-function linkedListTemplate(head) {
-  let prev = null;
-  let curr = head;
+public class LinkedListTemplate {
+    public static ListNode reverse(ListNode head) {
+        ListNode prev = null;
+        ListNode curr = head;
 
-  while (curr !== null) {
-    const nextTemp = curr.next; // lưu lại trước khi ghi đè
-    curr.next = prev;           // đảo hướng con trỏ
-    prev = curr;
-    curr = nextTemp;
-  }
+        while (curr != null) {
+            ListNode nextTemp = curr.next; // lưu lại trước khi ghi đè
+            curr.next = prev;              // đảo hướng con trỏ
+            prev = curr;
+            curr = nextTemp;
+        }
 
-  return prev; // head mới sau khi đảo ngược
+        return prev; // head mới sau khi đảo ngược
+    }
 }`,
   examples: [
     { name: "Reverse Linked List", difficulty: "Easy", note: "Bài đại diện bên dưới — đảo ngược toàn bộ danh sách." },
@@ -847,40 +910,46 @@ function linkedListTemplate(head) {
       "Lặp lại đến khi curr === null.",
       "Trả về prev — đây chính là head mới của danh sách đã đảo ngược."
     ],
-    code: `function ListNode(val, next) {
-  this.val = val === undefined ? 0 : val;
-  this.next = next === undefined ? null : next;
+    code: `class ListNode {
+    int val;
+    ListNode next;
+    ListNode(int val) { this.val = val; }
 }
 
-function reverseList(head) {
-  let prev = null;
-  let curr = head;
+public class Solution {
+    public static ListNode reverseList(ListNode head) {
+        ListNode prev = null;
+        ListNode curr = head;
 
-  while (curr !== null) {
-    const nextTemp = curr.next;
-    curr.next = prev;
-    prev = curr;
-    curr = nextTemp;
-  }
+        while (curr != null) {
+            ListNode nextTemp = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = nextTemp;
+        }
 
-  return prev;
-}
+        return prev;
+    }
 
-// Demo: tạo danh sách 1->2->3, đảo ngược, in ra mảng giá trị
-function arrayToList(arr) {
-  let dummy = new ListNode(0);
-  let curr = dummy;
-  for (const v of arr) { curr.next = new ListNode(v); curr = curr.next; }
-  return dummy.next;
-}
-function listToArray(head) {
-  const res = [];
-  while (head) { res.push(head.val); head = head.next; }
-  return res;
-}
+    // Demo: tạo danh sách 1->2->3, đảo ngược, in ra các giá trị
+    public static void main(String[] args) {
+        int[] values = {1, 2, 3, 4, 5};
+        ListNode dummy = new ListNode(0);
+        ListNode curr = dummy;
+        for (int v : values) {
+            curr.next = new ListNode(v);
+            curr = curr.next;
+        }
 
-const head = arrayToList([1,2,3,4,5]);
-console.log(listToArray(reverseList(head))); // [5,4,3,2,1]`,
+        ListNode reversed = reverseList(dummy.next);
+        StringBuilder sb = new StringBuilder();
+        while (reversed != null) {
+            sb.append(reversed.val).append(" ");
+            reversed = reversed.next;
+        }
+        System.out.println(sb.toString().trim()); // 5 4 3 2 1
+    }
+}`,
     timeComplexity: "O(n) — duyệt qua mỗi node đúng 1 lần.",
     spaceComplexity: "O(1) — đảo ngược tại chỗ, không tạo danh sách mới hay dùng đệ quy sâu.",
     similar: ["Reverse Linked List II", "Palindrome Linked List", "Swap Nodes in Pairs"]
@@ -962,44 +1031,54 @@ console.log(listToArray(reverseList(head))); // [5,4,3,2,1]`,
     "Trong BFS, quên lưu kích thước queue tại đầu mỗi tầng trước khi bắt đầu xử lý, dẫn đến nhầm lẫn ranh giới giữa các tầng."
   ],
   thinkingTemplate: "Hỏi: bài toán này cần biết thông tin toàn nhánh (độ sâu, tổng đường đi) hay cần thông tin theo từng tầng (in ra từng level)? Câu trả lời đầu tiên gợi ý DFS (đệ quy), câu trả lời thứ hai gợi ý BFS (Queue).",
-  codeTemplate: `// Định nghĩa node (thường đã cho sẵn trong đề bài)
-function TreeNode(val, left, right) {
-  this.val = val === undefined ? 0 : val;
-  this.left = left === undefined ? null : left;
-  this.right = right === undefined ? null : right;
+  codeTemplate: `import java.util.List;
+import java.util.ArrayList;
+import java.util.Queue;
+import java.util.LinkedList;
+
+// Định nghĩa node (thường đã cho sẵn trong đề bài)
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode(int val) { this.val = val; }
 }
 
-// DFS đệ quy
-function dfsTemplate(node) {
-  if (node === null) return 0; // trường hợp gốc (base case)
+public class TreeTemplate {
+    // DFS đệ quy
+    public static int dfs(TreeNode node) {
+        if (node == null) return 0; // trường hợp gốc (base case)
 
-  const leftResult = dfsTemplate(node.left);
-  const rightResult = dfsTemplate(node.right);
+        int leftResult = dfs(node.left);
+        int rightResult = dfs(node.right);
 
-  return 1 + Math.max(leftResult, rightResult); // ví dụ: tính chiều sâu
-}
-
-// BFS dùng Queue
-function bfsTemplate(root) {
-  if (root === null) return [];
-  const result = [];
-  const queue = [root];
-
-  while (queue.length > 0) {
-    const levelSize = queue.length; // ranh giới của tầng hiện tại
-    const level = [];
-
-    for (let i = 0; i < levelSize; i++) {
-      const node = queue.shift();
-      level.push(node.val);
-      if (node.left) queue.push(node.left);
-      if (node.right) queue.push(node.right);
+        return 1 + Math.max(leftResult, rightResult); // ví dụ: tính chiều sâu
     }
 
-    result.push(level);
-  }
+    // BFS dùng Queue
+    public static List<List<Integer>> bfs(TreeNode root) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (root == null) return result;
 
-  return result;
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+
+        while (!queue.isEmpty()) {
+            int levelSize = queue.size(); // ranh giới của tầng hiện tại
+            List<Integer> level = new ArrayList<>();
+
+            for (int i = 0; i < levelSize; i++) {
+                TreeNode node = queue.poll();
+                level.add(node.val);
+                if (node.left != null) queue.offer(node.left);
+                if (node.right != null) queue.offer(node.right);
+            }
+
+            result.add(level);
+        }
+
+        return result;
+    }
 }`,
   examples: [
     { name: "Maximum Depth of Binary Tree", difficulty: "Easy", note: "Bài đại diện bên dưới — DFS đệ quy cơ bản." },
@@ -1020,27 +1099,34 @@ function bfsTemplate(root) {
       "Đệ quy tính chiều sâu cây con phải: rightDepth = maxDepth(node.right).",
       "Trả về 1 + Math.max(leftDepth, rightDepth) — cộng 1 cho chính node hiện tại."
     ],
-    code: `function TreeNode(val, left, right) {
-  this.val = val === undefined ? 0 : val;
-  this.left = left === undefined ? null : left;
-  this.right = right === undefined ? null : right;
+    code: `class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode(int val) { this.val = val; }
 }
 
-function maxDepth(root) {
-  if (root === null) return 0;
+public class Solution {
+    public static int maxDepth(TreeNode root) {
+        if (root == null) return 0;
 
-  const leftDepth = maxDepth(root.left);
-  const rightDepth = maxDepth(root.right);
+        int leftDepth = maxDepth(root.left);
+        int rightDepth = maxDepth(root.right);
 
-  return 1 + Math.max(leftDepth, rightDepth);
-}
+        return 1 + Math.max(leftDepth, rightDepth);
+    }
 
-// Demo: xây cây [3,9,20,null,null,15,7]
-const root = new TreeNode(3,
-  new TreeNode(9),
-  new TreeNode(20, new TreeNode(15), new TreeNode(7))
-);
-console.log(maxDepth(root)); // 3`,
+    public static void main(String[] args) {
+        // Xây cây [3,9,20,null,null,15,7]
+        TreeNode root = new TreeNode(3);
+        root.left = new TreeNode(9);
+        root.right = new TreeNode(20);
+        root.right.left = new TreeNode(15);
+        root.right.right = new TreeNode(7);
+
+        System.out.println(maxDepth(root)); // 3
+    }
+}`,
     timeComplexity: "O(n) — mỗi node được ghé thăm đúng 1 lần.",
     spaceComplexity: "O(h) — với h là chiều cao cây, do call stack của đệ quy; trường hợp xấu nhất (cây lệch hẳn) là O(n).",
     similar: ["Minimum Depth of Binary Tree", "Balanced Binary Tree", "Diameter of Binary Tree"]
@@ -1131,23 +1217,27 @@ console.log(maxDepth(root)); // 3`,
     "Không có điều kiện dừng (base case) rõ ràng, dẫn đến đệ quy vô hạn hoặc duyệt thừa."
   ],
   thinkingTemplate: "Hỏi: tại mỗi bước, mình có những lựa chọn nào? Sau khi chọn 1 lựa chọn và đệ quy xong, mình cần 'undo' gì để quay lại trạng thái trước đó và thử lựa chọn khác? Đây chính là 3 bước cốt lõi: Chọn (choose) → Khám phá (explore) → Bỏ chọn (un-choose).",
-  codeTemplate: `function backtrackingTemplate(nums) {
-  const result = [];
-  const path = [];
+  codeTemplate: `import java.util.List;
+import java.util.ArrayList;
 
-  function backtrack(start) {
-    // Base case: điều kiện để thêm 1 kết quả hợp lệ
-    result.push([...path]); // luôn copy path, không push tham chiếu
-
-    for (let i = start; i < nums.length; i++) {
-      path.push(nums[i]);      // Bước 1: Chọn
-      backtrack(i + 1);        // Bước 2: Khám phá (đệ quy)
-      path.pop();               // Bước 3: Bỏ chọn (quay lui)
+public class BacktrackingTemplate {
+    public static List<List<Integer>> backtrackingSolve(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        List<Integer> path = new ArrayList<>();
+        backtrack(nums, 0, path, result);
+        return result;
     }
-  }
 
-  backtrack(0);
-  return result;
+    private static void backtrack(int[] nums, int start, List<Integer> path, List<List<Integer>> result) {
+        // Base case: điều kiện để thêm 1 kết quả hợp lệ
+        result.add(new ArrayList<>(path)); // luôn copy path, không thêm tham chiếu
+
+        for (int i = start; i < nums.length; i++) {
+            path.add(nums[i]);              // Bước 1: Chọn
+            backtrack(nums, i + 1, path, result); // Bước 2: Khám phá (đệ quy)
+            path.remove(path.size() - 1);   // Bước 3: Bỏ chọn (quay lui)
+        }
+    }
 }`,
   examples: [
     { name: "Subsets", difficulty: "Medium", note: "Bài đại diện bên dưới — liệt kê mọi tập con." },
@@ -1170,27 +1260,33 @@ console.log(maxDepth(root)); // 3`,
       "Sau khi đệ quy trả về, pop() phần tử vừa thêm ra khỏi path (quay lui) để thử phần tử tiếp theo trong vòng lặp.",
       "Gọi backtrack(0) để bắt đầu, trả về result."
     ],
-    code: `function subsets(nums) {
-  const result = [];
-  const path = [];
+    code: `import java.util.List;
+import java.util.ArrayList;
 
-  function backtrack(start) {
-    result.push([...path]); // copy path hiện tại vào kết quả
-
-    for (let i = start; i < nums.length; i++) {
-      path.push(nums[i]);   // Chọn
-      backtrack(i + 1);     // Khám phá
-      path.pop();            // Bỏ chọn (quay lui)
+public class Solution {
+    public static List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        List<Integer> path = new ArrayList<>();
+        backtrack(nums, 0, path, result);
+        return result;
     }
-  }
 
-  backtrack(0);
-  return result;
-}
+    private static void backtrack(int[] nums, int start, List<Integer> path, List<List<Integer>> result) {
+        result.add(new ArrayList<>(path)); // copy path hiện tại vào kết quả
 
-// Demo:
-console.log(subsets([1,2,3]));
-// [[],[1],[1,2],[1,2,3],[1,3],[2],[2,3],[3]]`,
+        for (int i = start; i < nums.length; i++) {
+            path.add(nums[i]);                    // Chọn
+            backtrack(nums, i + 1, path, result);  // Khám phá
+            path.remove(path.size() - 1);          // Bỏ chọn (quay lui)
+        }
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {1, 2, 3};
+        System.out.println(subsets(nums));
+        // [[], [1], [1, 2], [1, 2, 3], [1, 3], [2], [2, 3], [3]]
+    }
+}`,
     timeComplexity: "O(n * 2^n) — có 2^n tập con, mỗi tập con tốn O(n) để copy vào kết quả.",
     spaceComplexity: "O(n) cho độ sâu đệ quy (không tính kết quả đầu ra), hoặc O(n * 2^n) nếu tính cả bộ nhớ lưu kết quả.",
     similar: ["Permutations", "Combination Sum", "Subsets II"]
@@ -1268,27 +1364,33 @@ console.log(subsets([1,2,3]));
     "Nhầm chỉ số mảng (off-by-one) khi chuyển từ đệ quy sang vòng lặp (tabulation)."
   ],
   thinkingTemplate: "Hỏi: để tính đáp án tại bước n, mình cần biết đáp án của những bước nhỏ hơn nào? Nếu có công thức truy hồi rõ ràng (ví dụ dp[n] = dp[n-1] + dp[n-2]), đó là dấu hiệu DP. Sau đó hỏi tiếp: mình có đang tính lại cùng 1 giá trị nhiều lần không? Nếu có, cần lưu cache.",
-  codeTemplate: `// Cách 1: Memoization (đệ quy + cache, từ trên xuống)
-function dpMemoTemplate(n, memo = {}) {
-  if (n in memo) return memo[n];      // đã tính rồi, lấy từ cache
-  if (n <= 1) return n;                // base case
+  codeTemplate: `import java.util.Map;
+import java.util.HashMap;
 
-  memo[n] = dpMemoTemplate(n - 1, memo) + dpMemoTemplate(n - 2, memo);
-  return memo[n];
-}
+public class DpTemplate {
+    // Cách 1: Memoization (đệ quy + cache, từ trên xuống)
+    public static int dpMemo(int n, Map<Integer, Integer> memo) {
+        if (memo.containsKey(n)) return memo.get(n); // đã tính rồi, lấy từ cache
+        if (n <= 1) return n;                         // base case
 
-// Cách 2: Tabulation (vòng lặp + bảng, từ dưới lên)
-function dpTabulationTemplate(n) {
-  if (n <= 1) return n;
-  const dp = new Array(n + 1).fill(0);
-  dp[0] = 0;
-  dp[1] = 1;
+        int result = dpMemo(n - 1, memo) + dpMemo(n - 2, memo);
+        memo.put(n, result);
+        return result;
+    }
 
-  for (let i = 2; i <= n; i++) {
-    dp[i] = dp[i - 1] + dp[i - 2]; // công thức truy hồi
-  }
+    // Cách 2: Tabulation (vòng lặp + bảng, từ dưới lên)
+    public static int dpTabulation(int n) {
+        if (n <= 1) return n;
+        int[] dp = new int[n + 1];
+        dp[0] = 0;
+        dp[1] = 1;
 
-  return dp[n];
+        for (int i = 2; i <= n; i++) {
+            dp[i] = dp[i - 1] + dp[i - 2]; // công thức truy hồi
+        }
+
+        return dp[n];
+    }
 }`,
   examples: [
     { name: "Climbing Stairs", difficulty: "Easy", note: "Bài đại diện bên dưới — công thức truy hồi giống dãy Fibonacci." },
@@ -1309,23 +1411,26 @@ function dpTabulationTemplate(n) {
       "Duyệt i từ 2 đến n: dp[i] = dp[i-1] + dp[i-2] (bước cuối là 1 bậc từ dp[i-1], hoặc 2 bậc từ dp[i-2]).",
       "Trả về dp[n]."
     ],
-    code: `function climbStairs(n) {
-  if (n <= 1) return 1;
+    code: `public class Solution {
+    public static int climbStairs(int n) {
+        if (n <= 1) return 1;
 
-  const dp = new Array(n + 1).fill(0);
-  dp[0] = 1;
-  dp[1] = 1;
+        int[] dp = new int[n + 1];
+        dp[0] = 1;
+        dp[1] = 1;
 
-  for (let i = 2; i <= n; i++) {
-    dp[i] = dp[i - 1] + dp[i - 2];
-  }
+        for (int i = 2; i <= n; i++) {
+            dp[i] = dp[i - 1] + dp[i - 2];
+        }
 
-  return dp[n];
-}
+        return dp[n];
+    }
 
-// Demo:
-console.log(climbStairs(3)); // 3
-console.log(climbStairs(5)); // 8`,
+    public static void main(String[] args) {
+        System.out.println(climbStairs(3)); // 3
+        System.out.println(climbStairs(5)); // 8
+    }
+}`,
     timeComplexity: "O(n) — vòng lặp duyệt từ 2 đến n, mỗi bước O(1).",
     spaceComplexity: "O(n) cho mảng dp; có thể tối ưu xuống O(1) nếu chỉ lưu 2 giá trị gần nhất thay vì cả mảng.",
     similar: ["Min Cost Climbing Stairs", "House Robber", "Fibonacci Number"]
@@ -1395,22 +1500,26 @@ console.log(climbStairs(5)); // 8`,
     "Không kiểm chứng logic tham lam bằng ví dụ nhỏ trước khi code toàn bộ, dẫn tới code sai mà khó phát hiện."
   ],
   thinkingTemplate: "Hỏi: nếu tại bước này mình chọn phương án tốt nhất ngay lúc đó, liệu có bao giờ điều đó khiến kết quả CUỐI CÙNG tệ hơn không? Thử nghĩ một phản ví dụ. Nếu không nghĩ ra phản ví dụ nào sau khi thử vài trường hợp, Greedy có khả năng đúng.",
-  codeTemplate: `function greedyTemplate(items) {
-  // Bước 1: sắp xếp theo tiêu chí phù hợp (nếu cần)
-  items.sort((a, b) => a - b);
+  codeTemplate: `import java.util.Arrays;
 
-  let result = 0;
-  let state = /* trạng thái ban đầu */ 0;
+public class GreedyTemplate {
+    public static int greedySolve(int[] items) {
+        // Bước 1: sắp xếp theo tiêu chí phù hợp (nếu cần)
+        Arrays.sort(items);
 
-  // Bước 2: duyệt và luôn chọn phương án tốt nhất tại chỗ
-  for (const item of items) {
-    if (/* điều kiện item có lợi ngay bây giờ */ true) {
-      result++;
-      state += item; // cập nhật trạng thái
+        int result = 0;
+        int state = /* trạng thái ban đầu */ 0;
+
+        // Bước 2: duyệt và luôn chọn phương án tốt nhất tại chỗ
+        for (int item : items) {
+            if (/* điều kiện item có lợi ngay bây giờ */ true) {
+                result++;
+                state += item; // cập nhật trạng thái
+            }
+        }
+
+        return result;
     }
-  }
-
-  return result;
 }`,
   examples: [
     { name: "Assign Cookies", difficulty: "Easy", note: "Bài đại diện bên dưới — sắp xếp rồi ghép tham lam." },
@@ -1432,29 +1541,36 @@ console.log(climbStairs(5)); // 8`,
       "Nếu bánh hiện tại không đủ lớn, chỉ tăng cookieJ (thử bánh lớn hơn tiếp theo, bỏ qua bánh này vì quá nhỏ với mọi trẻ còn lại).",
       "Trả về count khi một trong 2 con trỏ vượt quá độ dài mảng."
     ],
-    code: `function findContentChildren(greed, cookies) {
-  greed.sort((a, b) => a - b);
-  cookies.sort((a, b) => a - b);
+    code: `import java.util.Arrays;
 
-  let childI = 0;
-  let cookieJ = 0;
-  let count = 0;
+public class Solution {
+    public static int findContentChildren(int[] greed, int[] cookies) {
+        Arrays.sort(greed);
+        Arrays.sort(cookies);
 
-  while (childI < greed.length && cookieJ < cookies.length) {
-    if (cookies[cookieJ] >= greed[childI]) {
-      count++;
-      childI++;
-      cookieJ++;
-    } else {
-      cookieJ++; // bánh quá nhỏ, thử bánh tiếp theo
+        int childI = 0;
+        int cookieJ = 0;
+        int count = 0;
+
+        while (childI < greed.length && cookieJ < cookies.length) {
+            if (cookies[cookieJ] >= greed[childI]) {
+                count++;
+                childI++;
+                cookieJ++;
+            } else {
+                cookieJ++; // bánh quá nhỏ, thử bánh tiếp theo
+            }
+        }
+
+        return count;
     }
-  }
 
-  return count;
-}
-
-// Demo:
-console.log(findContentChildren([1,2,3], [1,1])); // 1`,
+    public static void main(String[] args) {
+        int[] greed = {1, 2, 3};
+        int[] cookies = {1, 1};
+        System.out.println(findContentChildren(greed, cookies)); // 1
+    }
+}`,
     timeComplexity: "O(n log n) — chi phí chính nằm ở việc sắp xếp 2 mảng; phần duyệt sau đó chỉ O(n).",
     spaceComplexity: "O(1) hoặc O(log n) tùy thuật toán sắp xếp — không cần thêm cấu trúc dữ liệu phụ đáng kể.",
     similar: ["Can Place Flowers", "Lemonade Change", "Boats to Save People"]
