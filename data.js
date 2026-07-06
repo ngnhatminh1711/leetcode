@@ -43,10 +43,13 @@ const PATTERNS = [
     }
 }`,
   examples: [
-    { name: "Two Sum", difficulty: "Easy", note: "Tìm 2 số có tổng bằng target — thường giải bằng Hash Map, nhưng bản chất vẫn là duyệt mảng một lần." },
-    { name: "Best Time to Buy and Sell Stock", difficulty: "Easy", note: "Theo dõi giá thấp nhất đã thấy và lợi nhuận lớn nhất — kinh điển của kỹ thuật running min/max." },
-    { name: "Contains Duplicate", difficulty: "Easy", note: "Duyệt mảng, dùng Set để phát hiện phần tử trùng lặp." },
-    { name: "Maximum Subarray", difficulty: "Medium", note: "Bài đại diện bên dưới — thuật toán Kadane's." }
+    { name: "Two Sum", difficulty: "Easy", note: "Tìm 2 số có tổng bằng target — thường giải bằng Hash Map, nhưng bản chất vẫn là duyệt mảng một lần.", hint: "Với mỗi phần tử, số còn thiếu để đạt target là (target - nums[i]). Có cần tra cứu nhanh xem số đó đã xuất hiện chưa không?" },
+    { name: "Best Time to Buy and Sell Stock", difficulty: "Easy", note: "Theo dõi giá thấp nhất đã thấy và lợi nhuận lớn nhất — kinh điển của kỹ thuật running min/max.", hint: "Duyệt qua giá từng ngày, luôn nhớ giá thấp nhất đã gặp. Tại mỗi ngày, nếu bán ra hôm nay thì lời bao nhiêu so với giá thấp nhất đó?" },
+    { name: "Contains Duplicate", difficulty: "Easy", note: "Duyệt mảng, dùng Set để phát hiện phần tử trùng lặp.", hint: "Có cấu trúc dữ liệu nào giúp kiểm tra 'phần tử này đã gặp chưa' trong O(1) không? Nếu gặp lại phần tử đã có trong đó, dừng ngay." },
+    { name: "Maximum Subarray", difficulty: "Medium", note: "Bài đại diện bên dưới — thuật toán Kadane's.", hint: "Tại mỗi vị trí, tự hỏi: cộng phần tử này vào dãy đang có thì lợi hơn, hay bắt đầu dãy mới từ đây thì lợi hơn? So sánh 2 lựa chọn đó." },
+    { name: "Move Zeroes", difficulty: "Easy", note: "Di chuyển tất cả số 0 về cuối mảng, giữ nguyên thứ tự các số khác, làm tại chỗ (in-place).", hint: "Dùng 1 con trỏ đánh dấu 'vị trí tiếp theo để đặt số khác 0'. Duyệt mảng, mỗi khi gặp số khác 0, đưa nó về vị trí con trỏ rồi tăng con trỏ lên." },
+    { name: "Plus One", difficulty: "Easy", note: "Một số lớn được biểu diễn dưới dạng mảng các chữ số, cộng thêm 1 vào số đó.", hint: "Cộng 1 giống như cộng tay từ phải sang trái: nếu chữ số hiện tại là 9, nó trở thành 0 và phải 'nhớ' 1 sang chữ số bên trái. Chuyện gì xảy ra nếu mọi chữ số đều là 9?" },
+    { name: "Majority Element", difficulty: "Easy", note: "Tìm phần tử xuất hiện nhiều hơn n/2 lần trong mảng — có thể giải bằng đếm tần suất hoặc thuật toán Boyer-Moore Voting.", hint: "Cách đơn giản nhất: đếm tần suất bằng Hash Map rồi tìm phần tử có count lớn nhất. Có cách nào không cần thêm bộ nhớ không? (gợi ý: nghĩ về 'phiếu bầu' — mỗi phần tử giống nhau +1 phiếu, khác nhau -1 phiếu)" }
   ],
   walkthrough: {
     problemName: "Maximum Subarray",
@@ -167,10 +170,13 @@ public class FrequencyCounterTemplate {
     }
 }`,
   examples: [
-    { name: "Two Sum", difficulty: "Easy", note: "Bài đại diện bên dưới — vừa duyệt vừa tra map." },
-    { name: "Valid Anagram", difficulty: "Easy", note: "Đếm tần suất ký tự của 2 chuỗi, so sánh 2 map." },
-    { name: "Group Anagrams", difficulty: "Medium", note: "Dùng chuỗi đã sắp xếp làm key để nhóm các anagram lại." },
-    { name: "Top K Frequent Elements", difficulty: "Medium", note: "Đếm tần suất rồi sắp xếp/lấy K phần tử nhiều nhất." }
+    { name: "Two Sum", difficulty: "Easy", note: "Bài đại diện bên dưới — vừa duyệt vừa tra map.", hint: "Với mỗi số, tính complement = target - nums[i]. Tra map xem complement đã xuất hiện chưa trước khi thêm số hiện tại vào map." },
+    { name: "Valid Anagram", difficulty: "Easy", note: "Đếm tần suất ký tự của 2 chuỗi, so sánh 2 map.", hint: "Nếu 2 chuỗi là anagram của nhau, chúng phải có cùng tần suất từng ký tự. Đếm ký tự chuỗi 1 (+1), đếm ký tự chuỗi 2 (-1), cuối cùng mọi giá trị trong map phải bằng 0." },
+    { name: "Group Anagrams", difficulty: "Medium", note: "Dùng chuỗi đã sắp xếp làm key để nhóm các anagram lại.", hint: "Mọi anagram của nhau, khi sắp xếp ký tự, sẽ cho ra cùng 1 chuỗi. Dùng chuỗi đã sắp xếp đó làm key của map, value là danh sách các từ gốc." },
+    { name: "Top K Frequent Elements", difficulty: "Medium", note: "Đếm tần suất rồi sắp xếp/lấy K phần tử nhiều nhất.", hint: "Bước 1: đếm tần suất từng phần tử bằng map. Bước 2: cần lấy K phần tử có tần suất cao nhất — có thể sắp xếp theo tần suất, hoặc dùng bucket sort theo tần suất để đạt O(n)." },
+    { name: "Ransom Note", difficulty: "Easy", note: "Kiểm tra xem có thể ghép chữ trong 'magazine' để tạo ra 'ransomNote' hay không, mỗi ký tự trong magazine chỉ dùng được 1 lần.", hint: "Đếm tần suất từng ký tự trong magazine. Duyệt qua ransomNote, mỗi ký tự cần trừ đi 1 trong map — nếu không đủ số lượng (âm hoặc không tồn tại) thì trả về false." },
+    { name: "Subarray Sum Equals K", difficulty: "Medium", note: "Đếm số lượng dãy con liên tiếp có tổng bằng k, dùng prefix sum kết hợp Hash Map.", hint: "Nếu prefixSum[j] - prefixSum[i] = k, thì dãy con từ i+1 đến j có tổng k. Lưu tần suất các prefixSum đã gặp vào map, mỗi bước kiểm tra xem (prefixSum hiện tại - k) đã xuất hiện bao nhiêu lần." },
+    { name: "Longest Consecutive Sequence", difficulty: "Medium", note: "Tìm độ dài dãy số nguyên liên tiếp dài nhất trong mảng (không cần liền kề trong mảng gốc), dùng Set để tra cứu O(1).", hint: "Đưa tất cả số vào 1 Set. Với mỗi số, chỉ bắt đầu đếm dãy nếu (số - 1) KHÔNG có trong Set — đó chính là điểm bắt đầu của một dãy liên tiếp. Từ đó đếm xem dãy kéo dài bao xa." }
   ],
   walkthrough: {
     problemName: "Two Sum",
@@ -306,10 +312,13 @@ public class Solution {
     }
 }`,
   examples: [
-    { name: "Valid Palindrome", difficulty: "Easy", note: "2 con trỏ từ 2 đầu chuỗi tiến vào giữa, so sánh ký tự." },
-    { name: "Two Sum II - Input Array Is Sorted", difficulty: "Medium", note: "Bài đại diện bên dưới — tận dụng mảng đã sắp xếp." },
-    { name: "3Sum", difficulty: "Medium", note: "Cố định 1 phần tử, dùng Two Pointers cho 2 phần tử còn lại." },
-    { name: "Container With Most Water", difficulty: "Medium", note: "2 con trỏ từ 2 đầu, luôn di chuyển con trỏ có chiều cao thấp hơn." }
+    { name: "Valid Palindrome", difficulty: "Easy", note: "2 con trỏ từ 2 đầu chuỗi tiến vào giữa, so sánh ký tự.", hint: "Đặt 1 con trỏ ở đầu, 1 con trỏ ở cuối chuỗi. So sánh 2 ký tự (sau khi bỏ qua ký tự không phải chữ/số), nếu khác nhau -> không phải palindrome. Tiến 2 con trỏ vào giữa." },
+    { name: "Two Sum II - Input Array Is Sorted", difficulty: "Medium", note: "Bài đại diện bên dưới — tận dụng mảng đã sắp xếp.", hint: "Vì mảng đã sắp xếp, nếu tổng 2 đầu quá lớn thì giảm con trỏ phải, quá nhỏ thì tăng con trỏ trái." },
+    { name: "3Sum", difficulty: "Medium", note: "Cố định 1 phần tử, dùng Two Pointers cho 2 phần tử còn lại.", hint: "Sắp xếp mảng trước. Cố định phần tử đầu tiên nums[i], sau đó dùng Two Pointers (left, right) trên phần còn lại để tìm 2 số có tổng = -nums[i]. Nhớ bỏ qua các giá trị trùng để tránh kết quả lặp." },
+    { name: "Container With Most Water", difficulty: "Medium", note: "2 con trỏ từ 2 đầu, luôn di chuyển con trỏ có chiều cao thấp hơn.", hint: "Diện tích = khoảng cách × chiều cao thấp hơn trong 2 cột. Nếu di chuyển con trỏ ở cột CAO hơn, khoảng cách giảm mà chiều cao thấp nhất không thể tăng — chắc chắn không lợi. Vậy nên di chuyển con trỏ nào?" },
+    { name: "Remove Duplicates from Sorted Array", difficulty: "Easy", note: "Xóa phần tử trùng lặp tại chỗ trong mảng đã sắp xếp, trả về độ dài mảng mới.", hint: "Dùng 1 con trỏ 'chậm' đánh dấu vị trí ghi phần tử duy nhất tiếp theo, 1 con trỏ 'nhanh' duyệt qua mảng. Chỉ ghi đè khi phần tử tại con trỏ nhanh khác phần tử vừa ghi." },
+    { name: "Sort Colors", difficulty: "Medium", note: "Sắp xếp mảng chỉ gồm 3 giá trị (0,1,2) tại chỗ trong 1 lượt duyệt, dùng 3 con trỏ (Dutch National Flag).", hint: "Dùng 3 con trỏ: low (biên cuối vùng số 0), mid (đang xét), high (biên đầu vùng số 2). Nếu gặp số 0, đổi chỗ với low và tăng cả 2; gặp số 2, đổi chỗ với high và giảm high (không tăng mid vì cần xét lại phần tử vừa đổi)." },
+    { name: "Trapping Rain Water", difficulty: "Medium", note: "Tính lượng nước có thể chứa được giữa các cột có chiều cao khác nhau, dùng Two Pointers với leftMax/rightMax.", hint: "Nước đọng tại 1 vị trí phụ thuộc vào min(cột cao nhất bên trái, cột cao nhất bên phải) trừ đi chiều cao tại đó. Dùng 2 con trỏ từ 2 đầu, luôn xử lý phía có leftMax/rightMax nhỏ hơn trước." }
   ],
   walkthrough: {
     problemName: "Two Sum II - Input Array Is Sorted",
@@ -452,10 +461,13 @@ public class SlidingWindowTemplate {
     }
 }`,
   examples: [
-    { name: "Maximum Average Subarray I", difficulty: "Easy", note: "Cửa sổ kích thước cố định k, trượt qua mảng." },
-    { name: "Longest Substring Without Repeating Characters", difficulty: "Medium", note: "Bài đại diện bên dưới — cửa sổ kích thước thay đổi." },
-    { name: "Minimum Size Subarray Sum", difficulty: "Medium", note: "Tìm đoạn con ngắn nhất có tổng >= target." },
-    { name: "Permutation in String", difficulty: "Medium", note: "Cửa sổ kích thước cố định, so sánh frequency counter." }
+    { name: "Maximum Average Subarray I", difficulty: "Easy", note: "Cửa sổ kích thước cố định k, trượt qua mảng.", hint: "Tính tổng k phần tử đầu tiên. Khi trượt cửa sổ sang phải 1 bước, trừ đi phần tử vừa ra khỏi cửa sổ (bên trái) và cộng thêm phần tử mới vào (bên phải) — không tính lại từ đầu." },
+    { name: "Longest Substring Without Repeating Characters", difficulty: "Medium", note: "Bài đại diện bên dưới — cửa sổ kích thước thay đổi.", hint: "Mở rộng right liên tục. Nếu ký tự tại right đã có trong cửa sổ, thu hẹp left cho đến khi loại bỏ ký tự trùng đó." },
+    { name: "Minimum Size Subarray Sum", difficulty: "Medium", note: "Tìm đoạn con ngắn nhất có tổng >= target.", hint: "Mở rộng right, cộng dồn tổng. Khi tổng >= target, thử thu hẹp left để tìm cửa sổ NGẮN HƠN vẫn thỏa điều kiện, ghi nhận độ dài nhỏ nhất mỗi lần thỏa." },
+    { name: "Permutation in String", difficulty: "Medium", note: "Cửa sổ kích thước cố định, so sánh frequency counter.", hint: "Tạo frequency counter của chuỗi cần tìm hoán vị. Trượt cửa sổ có độ dài bằng đúng chuỗi đó qua chuỗi lớn, so sánh frequency counter của cửa sổ với frequency counter mục tiêu." },
+    { name: "Best Time to Buy and Sell Stock", difficulty: "Easy", note: "Có thể xem như Sliding Window với cửa sổ [giá thấp nhất đã thấy, giá hiện tại], mở rộng right liên tục.", hint: "Left là ngày mua với giá thấp nhất đã thấy, right là ngày đang xét để bán. Nếu giá tại right thấp hơn giá tại left, di chuyển left tới right (tìm điểm mua mới thấp hơn)." },
+    { name: "Fruit Into Baskets", difficulty: "Medium", note: "Tìm đoạn con dài nhất chỉ chứa tối đa 2 loại phần tử khác nhau — Sliding Window với điều kiện giới hạn số loại.", hint: "Dùng map đếm loại quả trong cửa sổ. Mở rộng right, thêm loại quả vào map. Khi map có nhiều hơn 2 loại (kích thước map > 2), thu hẹp left cho đến khi chỉ còn 2 loại." },
+    { name: "Longest Repeating Character Replacement", difficulty: "Medium", note: "Tìm đoạn con dài nhất có thể biến thành 1 ký tự duy nhất sau khi thay đổi tối đa k ký tự.", hint: "Trong cửa sổ, nếu (độ dài cửa sổ - số lần xuất hiện ký tự nhiều nhất) > k thì cửa sổ cần nhiều hơn k lần thay đổi -> vi phạm, phải thu hẹp left. Theo dõi tần suất ký tự trong cửa sổ bằng map." }
   ],
   walkthrough: {
     problemName: "Longest Substring Without Repeating Characters",
@@ -597,10 +609,13 @@ public class StackTemplate {
     }
 }`,
   examples: [
-    { name: "Valid Parentheses", difficulty: "Easy", note: "Bài đại diện bên dưới — khớp dấu ngoặc mở/đóng." },
-    { name: "Min Stack", difficulty: "Medium", note: "Thiết kế Stack hỗ trợ lấy giá trị nhỏ nhất trong O(1)." },
-    { name: "Daily Temperatures", difficulty: "Medium", note: "Dùng Stack lưu index để tìm ngày ấm hơn tiếp theo." },
-    { name: "Evaluate Reverse Polish Notation", difficulty: "Medium", note: "Dùng Stack để tính biểu thức hậu tố." }
+    { name: "Valid Parentheses", difficulty: "Easy", note: "Bài đại diện bên dưới — khớp dấu ngoặc mở/đóng.", hint: "Gặp dấu mở thì đẩy vào stack. Gặp dấu đóng thì so sánh với đỉnh stack — có khớp loại không?" },
+    { name: "Min Stack", difficulty: "Medium", note: "Thiết kế Stack hỗ trợ lấy giá trị nhỏ nhất trong O(1).", hint: "Dùng 2 stack song song: 1 stack dữ liệu bình thường, 1 stack lưu giá trị nhỏ nhất tính đến thời điểm đó. Mỗi lần push, đẩy vào stack thứ 2 giá trị min(x, đỉnh hiện tại của stack min)." },
+    { name: "Daily Temperatures", difficulty: "Medium", note: "Dùng Stack lưu index để tìm ngày ấm hơn tiếp theo.", hint: "Duyệt mảng, dùng stack lưu index của các ngày CHƯA tìm được ngày ấm hơn. Khi gặp nhiệt độ mới lớn hơn nhiệt độ tại đỉnh stack, pop ra và tính khoảng cách ngày." },
+    { name: "Evaluate Reverse Polish Notation", difficulty: "Medium", note: "Dùng Stack để tính biểu thức hậu tố.", hint: "Duyệt từng token: nếu là số thì đẩy vào stack. Nếu là toán tử, pop 2 số gần nhất ra, tính kết quả, rồi đẩy kết quả trở lại stack." },
+    { name: "Remove All Adjacent Duplicates In String", difficulty: "Easy", note: "Xóa các cặp ký tự liền kề giống nhau cho đến khi không còn cặp nào, dùng Stack.", hint: "Duyệt từng ký tự: nếu ký tự hiện tại giống đỉnh stack, pop đỉnh ra (xóa cặp trùng). Nếu khác, đẩy ký tự vào stack." },
+    { name: "Implement Queue using Stacks", difficulty: "Easy", note: "Mô phỏng hàng đợi (FIFO) chỉ bằng 2 ngăn xếp (LIFO).", hint: "Dùng 2 stack: 1 stack để push (nhập vào), 1 stack để pop (xuất ra). Khi cần pop mà stack xuất đang rỗng, đổ toàn bộ stack nhập sang stack xuất — thứ tự sẽ tự động đảo ngược thành FIFO." },
+    { name: "Asteroid Collision", difficulty: "Medium", note: "Mô phỏng va chạm các hành tinh di chuyển ngược chiều nhau, dùng Stack để xử lý va chạm liên tiếp.", hint: "Duyệt từng hành tinh, dùng stack lưu các hành tinh đang 'còn sống'. Khi hành tinh mới đi sang trái và đỉnh stack đi sang phải, chúng va chạm — so sánh kích thước để biết ai bị phá hủy, lặp lại việc so sánh với đỉnh stack mới nếu cần." }
   ],
   walkthrough: {
     problemName: "Valid Parentheses",
