@@ -760,10 +760,13 @@ public class Solution {
     }
 }`,
   examples: [
-    { name: "Binary Search", difficulty: "Easy", note: "Bài đại diện bên dưới — tìm kiếm nhị phân cơ bản." },
-    { name: "Search Insert Position", difficulty: "Easy", note: "Tìm vị trí chèn nếu không tìm thấy target." },
-    { name: "First Bad Version", difficulty: "Easy", note: "Binary Search trên hàm kiểm tra đơn điệu (isBadVersion)." },
-    { name: "Search in Rotated Sorted Array", difficulty: "Medium", note: "Mảng đã sắp xếp nhưng bị xoay — cần xác định nửa nào vẫn còn sắp xếp." }
+    { name: "Binary Search", difficulty: "Easy", note: "Bài đại diện bên dưới — tìm kiếm nhị phân cơ bản.", hint: "So sánh phần tử giữa với target. Nhỏ hơn thì tìm ở nửa phải, lớn hơn thì tìm ở nửa trái." },
+    { name: "Search Insert Position", difficulty: "Easy", note: "Tìm vị trí chèn nếu không tìm thấy target.", hint: "Chạy Binary Search bình thường. Nếu không tìm thấy, con trỏ left cuối cùng chính là vị trí cần chèn để giữ mảng có thứ tự — vì sao?" },
+    { name: "First Bad Version", difficulty: "Easy", note: "Binary Search trên hàm kiểm tra đơn điệu (isBadVersion).", hint: "Từ version tốt chuyển sang version xấu chỉ xảy ra 1 lần duy nhất (tính đơn điệu). Binary Search trên chỉ số version: nếu isBadVersion(mid) là true, phiên bản xấu đầu tiên nằm ở mid hoặc bên trái." },
+    { name: "Search in Rotated Sorted Array", difficulty: "Medium", note: "Mảng đã sắp xếp nhưng bị xoay — cần xác định nửa nào vẫn còn sắp xếp.", hint: "Tại mỗi bước, so sánh nums[left] với nums[mid] để biết nửa trái có đang 'sắp xếp bình thường' không. Từ đó xác định target có nằm trong nửa đã sắp xếp đó không, rồi thu hẹp phạm vi phù hợp." },
+    { name: "Find Minimum in Rotated Sorted Array", difficulty: "Medium", note: "Tìm phần tử nhỏ nhất trong mảng đã sắp xếp bị xoay, dùng Binary Search.", hint: "So sánh nums[mid] với nums[right]. Nếu nums[mid] > nums[right], điểm xoay (và giá trị nhỏ nhất) nằm ở nửa phải. Nếu không, nó nằm ở nửa trái (bao gồm mid)." },
+    { name: "Koko Eating Bananas", difficulty: "Medium", note: "Tìm tốc độ ăn chuối nhỏ nhất để ăn hết trong h giờ — Binary Search trên KẾT QUẢ (đáp số), không phải trên mảng.", hint: "Thay vì tìm kiếm trong mảng, tìm kiếm trên khoảng giá trị tốc độ có thể (1 đến max(piles)). Với mỗi tốc độ thử nghiệm, tính xem có ăn kịp trong h giờ không — hàm kiểm tra này có tính đơn điệu, phù hợp Binary Search." },
+    { name: "Find Peak Element", difficulty: "Medium", note: "Tìm một phần tử 'đỉnh' (lớn hơn 2 phần tử liền kề) trong mảng, dùng Binary Search dựa vào độ dốc.", hint: "So sánh nums[mid] với nums[mid+1]. Nếu nums[mid] < nums[mid+1], đang đi lên nên đỉnh chắc chắn nằm bên phải mid. Nếu ngược lại, đỉnh nằm ở mid hoặc bên trái." }
   ],
   walkthrough: {
     problemName: "Binary Search",
@@ -905,10 +908,13 @@ public class LinkedListTemplate {
     }
 }`,
   examples: [
-    { name: "Reverse Linked List", difficulty: "Easy", note: "Bài đại diện bên dưới — đảo ngược toàn bộ danh sách." },
-    { name: "Merge Two Sorted Lists", difficulty: "Easy", note: "Hợp nhất 2 danh sách đã sắp xếp thành 1, dùng dummy node." },
-    { name: "Linked List Cycle", difficulty: "Easy", note: "Fast & Slow Pointers phát hiện chu trình." },
-    { name: "Remove Nth Node From End of List", difficulty: "Medium", note: "2 con trỏ cách nhau N bước để tìm node cần xóa trong 1 lượt duyệt." }
+    { name: "Reverse Linked List", difficulty: "Easy", note: "Bài đại diện bên dưới — đảo ngược toàn bộ danh sách.", hint: "Dùng 3 con trỏ prev, curr, next. Lưu next TRƯỚC khi ghi đè curr.next, để không mất phần còn lại của danh sách." },
+    { name: "Merge Two Sorted Lists", difficulty: "Easy", note: "Hợp nhất 2 danh sách đã sắp xếp thành 1, dùng dummy node.", hint: "Tạo 1 dummy node làm điểm khởi đầu. So sánh giá trị đầu của 2 danh sách, gắn node nhỏ hơn vào kết quả, di chuyển con trỏ tương ứng. Lặp lại đến khi 1 trong 2 danh sách hết." },
+    { name: "Linked List Cycle", difficulty: "Easy", note: "Fast & Slow Pointers phát hiện chu trình.", hint: "Dùng 2 con trỏ, 1 đi từng bước (slow), 1 đi 2 bước (fast). Nếu có chu trình, chúng chắc chắn sẽ gặp nhau tại một điểm nào đó — vì sao?" },
+    { name: "Remove Nth Node From End of List", difficulty: "Medium", note: "2 con trỏ cách nhau N bước để tìm node cần xóa trong 1 lượt duyệt.", hint: "Cho 1 con trỏ đi trước N bước. Sau đó, di chuyển cả 2 con trỏ cùng lúc — khi con trỏ đi trước chạm cuối danh sách, con trỏ còn lại đang đứng ngay trước node cần xóa." },
+    { name: "Palindrome Linked List", difficulty: "Easy", note: "Kiểm tra danh sách liên kết có đối xứng không, dùng Fast & Slow Pointers để tìm giữa rồi đảo ngược nửa sau.", hint: "Dùng Fast & Slow Pointers tìm điểm giữa danh sách. Đảo ngược nửa sau (giống bài Reverse Linked List). So sánh từng cặp giá trị giữa nửa đầu và nửa sau đã đảo ngược." },
+    { name: "Add Two Numbers", difficulty: "Medium", note: "Cộng 2 số được biểu diễn dưới dạng danh sách liên kết (mỗi node là 1 chữ số, thứ tự ngược), trả về kết quả dạng danh sách liên kết.", hint: "Duyệt đồng thời cả 2 danh sách như phép cộng tay: cộng từng cặp chữ số cùng vị trí + số nhớ (carry) từ bước trước, chữ số kết quả là (tổng % 10), carry mới là (tổng / 10)." },
+    { name: "Reorder List", difficulty: "Medium", note: "Sắp xếp lại danh sách theo thứ tự L0→Ln→L1→Ln-1→..., kết hợp Fast & Slow Pointers, đảo ngược, và merge.", hint: "3 bước: (1) Dùng Fast & Slow Pointers tìm điểm giữa để chia danh sách làm 2 nửa. (2) Đảo ngược nửa sau. (3) Ghép xen kẽ 2 nửa lại với nhau, mỗi lần lấy 1 node từ mỗi nửa." }
   ],
   walkthrough: {
     problemName: "Reverse Linked List",
@@ -1096,10 +1102,13 @@ public class TreeTemplate {
     }
 }`,
   examples: [
-    { name: "Maximum Depth of Binary Tree", difficulty: "Easy", note: "Bài đại diện bên dưới — DFS đệ quy cơ bản." },
-    { name: "Invert Binary Tree", difficulty: "Easy", note: "Đệ quy đổi chỗ left/right của mọi node." },
-    { name: "Same Tree", difficulty: "Easy", note: "So sánh cấu trúc 2 cây bằng đệ quy song song." },
-    { name: "Binary Tree Level Order Traversal", difficulty: "Medium", note: "BFS dùng Queue, duyệt theo từng tầng." }
+    { name: "Maximum Depth of Binary Tree", difficulty: "Easy", note: "Bài đại diện bên dưới — DFS đệ quy cơ bản.", hint: "Chiều sâu của 1 node = 1 + max(chiều sâu cây con trái, chiều sâu cây con phải). Base case: node null có chiều sâu 0." },
+    { name: "Invert Binary Tree", difficulty: "Easy", note: "Đệ quy đổi chỗ left/right của mọi node.", hint: "Tại mỗi node, đổi chỗ con trái và con phải, rồi đệ quy làm điều tương tự cho cả 2 cây con. Base case: node null thì không làm gì." },
+    { name: "Same Tree", difficulty: "Easy", note: "So sánh cấu trúc 2 cây bằng đệ quy song song.", hint: "2 cây giống nhau khi: cả 2 node hiện tại đều null (giống), hoặc cả 2 đều khác null VÀ giá trị bằng nhau VÀ cây con trái giống nhau VÀ cây con phải giống nhau." },
+    { name: "Binary Tree Level Order Traversal", difficulty: "Medium", note: "BFS dùng Queue, duyệt theo từng tầng.", hint: "Dùng Queue, mỗi vòng lặp ngoài xử lý đúng 1 tầng — lưu kích thước queue TRƯỚC khi xử lý tầng đó để biết ranh giới." },
+    { name: "Balanced Binary Tree", difficulty: "Easy", note: "Kiểm tra cây có cân bằng không (chênh lệch chiều cao 2 cây con mọi node <= 1), dùng DFS trả về đồng thời chiều cao và trạng thái cân bằng.", hint: "Viết hàm đệ quy trả về chiều cao; nếu phát hiện mất cân bằng ở bất kỳ node con nào, trả về giá trị đặc biệt (ví dụ -1) để lan truyền lên và dừng sớm, tránh phải tính lại từ đầu." },
+    { name: "Diameter of Binary Tree", difficulty: "Easy", note: "Tìm đường đi dài nhất giữa 2 node bất kỳ trong cây (có thể không qua gốc).", hint: "Đường kính tại 1 node = chiều sâu cây con trái + chiều sâu cây con phải. Tính giá trị này tại MỌI node trong lúc đệ quy tính chiều sâu, giữ lại giá trị lớn nhất gặp được." },
+    { name: "Lowest Common Ancestor of a Binary Search Tree", difficulty: "Medium", note: "Tìm tổ tiên chung gần nhất của 2 node trong Binary Search Tree, tận dụng tính chất BST.", hint: "Trong BST, nếu cả 2 giá trị cần tìm đều nhỏ hơn node hiện tại, tổ tiên chung nằm ở cây con trái. Nếu đều lớn hơn, nằm ở cây con phải. Nếu 1 nhỏ hơn và 1 lớn hơn (hoặc bằng), chính node hiện tại là tổ tiên chung." }
   ],
   walkthrough: {
     problemName: "Maximum Depth of Binary Tree",
@@ -1255,10 +1264,13 @@ public class BacktrackingTemplate {
     }
 }`,
   examples: [
-    { name: "Subsets", difficulty: "Medium", note: "Bài đại diện bên dưới — liệt kê mọi tập con." },
-    { name: "Permutations", difficulty: "Medium", note: "Liệt kê mọi hoán vị, dùng mảng 'đã dùng' (used) để tránh trùng phần tử." },
-    { name: "Combination Sum", difficulty: "Medium", note: "Tổ hợp có tổng bằng target, cho phép dùng lại phần tử." },
-    { name: "Letter Combinations of a Phone Number", difficulty: "Medium", note: "Backtracking trên bảng ánh xạ số điện thoại -> chữ cái." }
+    { name: "Subsets", difficulty: "Medium", note: "Bài đại diện bên dưới — liệt kê mọi tập con.", hint: "Tại mỗi bước, thêm bản copy của path hiện tại vào kết quả trước, rồi thử thêm từng phần tử còn lại vào path, đệ quy tiếp, sau đó bỏ ra." },
+    { name: "Permutations", difficulty: "Medium", note: "Liệt kê mọi hoán vị, dùng mảng 'đã dùng' (used) để tránh trùng phần tử.", hint: "Khác Subsets, mỗi hoán vị phải dùng ĐỦ mọi phần tử. Dùng thêm 1 mảng boolean 'used' để đánh dấu phần tử nào đã có trong path, tránh dùng lại." },
+    { name: "Combination Sum", difficulty: "Medium", note: "Tổ hợp có tổng bằng target, cho phép dùng lại phần tử.", hint: "Khác các bài Backtracking khác, ở đây được PHÉP dùng lại cùng 1 phần tử — nên khi đệ quy tiếp, truyền lại chỉ số bắt đầu là i (không phải i+1). Dừng khi tổng path bằng target hoặc vượt quá." },
+    { name: "Letter Combinations of a Phone Number", difficulty: "Medium", note: "Backtracking trên bảng ánh xạ số điện thoại -> chữ cái.", hint: "Mỗi chữ số ứng với 1 tập chữ cái cố định (bảng phím điện thoại). Đệ quy: với chữ số tại vị trí index, thử từng chữ cái tương ứng, thêm vào path, đệ quy tới chữ số tiếp theo (index+1)." },
+    { name: "Subsets II", difficulty: "Medium", note: "Liệt kê tập con của mảng CÓ chứa phần tử trùng lặp, không được sinh ra tập con trùng nhau.", hint: "Sắp xếp mảng trước. Tại mỗi bước trong vòng lặp, nếu phần tử hiện tại giống phần tử liền trước NÓ (cùng cấp đệ quy, không phải khác cấp), bỏ qua để tránh sinh tập con trùng." },
+    { name: "Palindrome Partitioning", difficulty: "Medium", note: "Liệt kê mọi cách chia chuỗi thành các phần đều là palindrome.", hint: "Tại mỗi vị trí bắt đầu, thử mọi độ dài cắt có thể. Nếu phần cắt ra là palindrome, thêm vào path và đệ quy tiếp với phần còn lại của chuỗi; nếu không, bỏ qua độ dài đó." },
+    { name: "Word Search", difficulty: "Medium", note: "Tìm xem một từ có thể ghép được từ các ô liền kề trên lưới ký tự hay không, dùng Backtracking + DFS trên lưới.", hint: "Từ mỗi ô khớp ký tự đầu, thử đệ quy sang 4 hướng (trên/dưới/trái/phải) để khớp ký tự tiếp theo. Đánh dấu ô đã dùng tạm thời (ví dụ đổi thành ký tự đặc biệt) để tránh dùng lại, rồi khôi phục lại khi quay lui." }
   ],
   walkthrough: {
     problemName: "Subsets",
@@ -1408,10 +1420,13 @@ public class DpTemplate {
     }
 }`,
   examples: [
-    { name: "Climbing Stairs", difficulty: "Easy", note: "Bài đại diện bên dưới — công thức truy hồi giống dãy Fibonacci." },
-    { name: "House Robber", difficulty: "Medium", note: "Tại mỗi nhà, chọn 'cướp' hoặc 'bỏ qua' dựa trên kết quả tối ưu trước đó." },
-    { name: "Min Cost Climbing Stairs", difficulty: "Easy", note: "Tương tự Climbing Stairs nhưng có chi phí, tối thiểu hóa tổng chi phí." },
-    { name: "Coin Change", difficulty: "Medium", note: "Số lượng đồng xu tối thiểu để đạt tổng target — DP theo tổng tiền." }
+    { name: "Climbing Stairs", difficulty: "Easy", note: "Bài đại diện bên dưới — công thức truy hồi giống dãy Fibonacci.", hint: "Bước cuối để tới bậc i chỉ có thể là 1 bậc (từ i-1) hoặc 2 bậc (từ i-2). Vậy dp[i] = dp[i-1] + dp[i-2]." },
+    { name: "House Robber", difficulty: "Medium", note: "Tại mỗi nhà, chọn 'cướp' hoặc 'bỏ qua' dựa trên kết quả tối ưu trước đó.", hint: "Tại nhà i, có 2 lựa chọn: cướp nhà này (cộng giá trị nhà i vào kết quả tối ưu tại i-2, vì không được cướp nhà liền kề) hoặc bỏ qua (giữ nguyên kết quả tối ưu tại i-1). Chọn giá trị lớn hơn." },
+    { name: "Min Cost Climbing Stairs", difficulty: "Easy", note: "Tương tự Climbing Stairs nhưng có chi phí, tối thiểu hóa tổng chi phí.", hint: "dp[i] là chi phí tối thiểu để tới bậc i. Vì có thể tới bậc i từ i-1 hoặc i-2, dp[i] = cost tại bậc bước cuối + min(dp[i-1], dp[i-2])." },
+    { name: "Coin Change", difficulty: "Medium", note: "Số lượng đồng xu tối thiểu để đạt tổng target — DP theo tổng tiền.", hint: "dp[i] là số xu tối thiểu để đạt tổng i. Với mỗi tổng i, thử từng loại xu: dp[i] = min(dp[i], dp[i - coin] + 1) với mọi coin <= i." },
+    { name: "Longest Increasing Subsequence", difficulty: "Medium", note: "Tìm độ dài dãy con tăng dần dài nhất (không cần liên tiếp) trong mảng.", hint: "dp[i] là độ dài dãy tăng dài nhất KẾT THÚC tại phần tử i. Với mỗi i, xét mọi j < i: nếu nums[j] < nums[i], dp[i] = max(dp[i], dp[j] + 1). Đáp án là giá trị lớn nhất trong toàn bộ mảng dp." },
+    { name: "Unique Paths", difficulty: "Medium", note: "Đếm số đường đi từ góc trên-trái đến góc dưới-phải của lưới, chỉ được đi phải hoặc xuống, dùng DP 2 chiều.", hint: "Số cách đến ô (i,j) = số cách đến ô bên trái (i,j-1) + số cách đến ô phía trên (i-1,j), vì đó là 2 hướng duy nhất có thể đến ô này. Base case: hàng đầu và cột đầu chỉ có duy nhất 1 cách." },
+    { name: "Word Break", difficulty: "Medium", note: "Kiểm tra chuỗi có thể tách thành các từ có trong từ điển hay không, dùng DP trên vị trí cắt.", hint: "dp[i] = true nếu chuỗi con s[0..i] có thể tách được từ từ điển. Với mỗi i, thử mọi điểm cắt j < i: nếu dp[j] = true VÀ s[j..i] có trong từ điển, thì dp[i] = true." }
   ],
   walkthrough: {
     problemName: "Climbing Stairs",
@@ -1537,10 +1552,13 @@ public class GreedyTemplate {
     }
 }`,
   examples: [
-    { name: "Assign Cookies", difficulty: "Easy", note: "Bài đại diện bên dưới — sắp xếp rồi ghép tham lam." },
-    { name: "Can Place Flowers", difficulty: "Easy", note: "Duyệt một lượt, tham lam trồng hoa mỗi khi có thể." },
-    { name: "Jump Game", difficulty: "Medium", note: "Theo dõi 'tầm với xa nhất' có thể đạt được (reachable range)." },
-    { name: "Gas Station", difficulty: "Medium", note: "Tham lam theo dõi tổng nhiên liệu và điểm bắt đầu khả thi." }
+    { name: "Assign Cookies", difficulty: "Easy", note: "Bài đại diện bên dưới — sắp xếp rồi ghép tham lam.", hint: "Sắp xếp cả 2 mảng. Luôn thử ghép bánh nhỏ nhất còn lại với trẻ ít đòi hỏi nhất còn lại — đây là cách dùng bánh 'tiết kiệm' nhất." },
+    { name: "Can Place Flowers", difficulty: "Easy", note: "Duyệt một lượt, tham lam trồng hoa mỗi khi có thể.", hint: "Duyệt từng ô đất. Nếu ô hiện tại trống VÀ ô liền trước trống (hoặc không tồn tại) VÀ ô liền sau trống (hoặc không tồn tại), trồng hoa ngay tại đó — quyết định tham lam này không bao giờ làm hại các bước sau." },
+    { name: "Jump Game", difficulty: "Medium", note: "Theo dõi 'tầm với xa nhất' có thể đạt được (reachable range).", hint: "Duyệt qua mảng, luôn cập nhật 'vị trí xa nhất có thể với tới được' = max(giá trị hiện tại, i + nums[i]). Nếu tại một vị trí i mà i vượt quá tầm với xa nhất, nghĩa là không thể đến được đó." },
+    { name: "Gas Station", difficulty: "Medium", note: "Tham lam theo dõi tổng nhiên liệu và điểm bắt đầu khả thi.", hint: "Nếu tổng (gas - cost) toàn bộ >= 0, chắc chắn có lời giải. Duyệt qua các trạm, nếu 'nhiên liệu còn lại' tại 1 điểm bị âm, điểm bắt đầu không thể là bất kỳ trạm nào từ đầu đến điểm đó — thử điểm bắt đầu mới là trạm kế tiếp." },
+    { name: "Lemonade Change", difficulty: "Easy", note: "Kiểm tra có thể thối tiền đúng cho mọi khách hàng hay không, chỉ dùng tờ 5, 10, 20 đô.", hint: "Chỉ cần theo dõi số lượng tờ 5 đô và 10 đô đang có (tờ 20 không dùng để thối được). Ưu tiên dùng tờ 10 + tờ 5 để thối 15 đô trước khi dùng 3 tờ 5, vì tờ 10 không dùng được cho trường hợp khác." },
+    { name: "Boats to Save People", difficulty: "Medium", note: "Ghép cặp người lên thuyền sao cho số thuyền cần dùng là ít nhất, mỗi thuyền chở tối đa 2 người và giới hạn cân nặng.", hint: "Sắp xếp mảng cân nặng. Dùng Two Pointers: luôn thử ghép người nặng nhất còn lại với người nhẹ nhất còn lại. Nếu ghép được (tổng <= giới hạn), cả 2 lên chung 1 thuyền; nếu không, người nặng nhất phải đi 1 mình." },
+    { name: "Non-overlapping Intervals", difficulty: "Medium", note: "Tìm số khoảng cần xóa tối thiểu để các khoảng còn lại không chồng lấn nhau, sắp xếp theo điểm kết thúc.", hint: "Sắp xếp các khoảng theo điểm KẾT THÚC tăng dần. Luôn giữ lại khoảng có điểm kết thúc sớm nhất trong các khoảng đang chồng lấn — đây là lựa chọn 'chừa chỗ' nhiều nhất cho các khoảng tiếp theo." }
   ],
   walkthrough: {
     problemName: "Assign Cookies",
