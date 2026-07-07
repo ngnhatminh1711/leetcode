@@ -514,6 +514,30 @@ code {
   margin-bottom: 4px;
 }
 
+.hint-toggle-btn {
+  background: var(--brand-soft);
+  color: var(--brand);
+  border: 1px solid var(--brand);
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 12.5px;
+  font-weight: 700;
+}
+.hint-toggle-btn:hover { background: var(--brand); color: white; }
+
+.hint-text {
+  display: none;
+  background: var(--bg-sunken);
+  border-left: 3px solid var(--brand);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  margin: 8px 0 0 0;
+  font-size: 13.5px;
+  color: var(--text);
+}
+.hint-text.show { display: block; }
+
+
 /* tabs */
 .tabs { margin-bottom: 20px; }
 .tab-buttons {

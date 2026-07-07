@@ -339,13 +339,17 @@
 
           <h2 class="section-heading">Bài tập tương tự cùng pattern</h2>
           <div class="example-list">
-            ${p.examples.map(ex => `
+            ${p.examples.map((ex, exIndex) => `
               <div class="example-card">
                 <div class="example-card-title">
                   <span>${escapeHtml(ex.name)}</span>
                   ${badgeForDifficulty(ex.difficulty)}
                 </div>
-                <p class="muted" style="margin:0;">${escapeHtml(ex.note)}</p>
+                <p class="muted" style="margin:0 0 8px 0;">${escapeHtml(ex.note)}</p>
+                ${ex.hint ? `
+                  <button class="hint-toggle-btn" data-hint-target="hint-${p.id}-${exIndex}">💡 Xem gợi ý</button>
+                  <p class="hint-text" id="hint-${p.id}-${exIndex}">${escapeHtml(ex.hint)}</p>
+                ` : ""}
               </div>
             `).join("")}
           </div>
@@ -426,6 +430,9 @@
 
     // Gắn demo run button
     attachDemoHandlers(p);
+
+    // Gắn nút xem gợi ý (ẩn/hiện)
+    attachHintToggles();
 
     // Render quiz
     renderQuiz(p, `quizContainer-${p.id}`);
@@ -522,6 +529,18 @@
         } else {
           fallbackCopy(text, doCopySuccess);
         }
+      });
+    });
+  }
+
+  function attachHintToggles() {
+    $all(".hint-toggle-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const targetId = btn.dataset.hintTarget;
+        const hintEl = document.getElementById(targetId);
+        if (!hintEl) return;
+        const nowShown = hintEl.classList.toggle("show");
+        btn.textContent = nowShown ? "🙈 Ẩn gợi ý" : "💡 Xem gợi ý";
       });
     });
   }
